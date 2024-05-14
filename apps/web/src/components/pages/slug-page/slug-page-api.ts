@@ -18,7 +18,7 @@ export const getSlugPageData = async (slug: string) => {
   return await handleErrors(
     sanityServerFetch<GetSlugPageDataQueryResult>({
       query: getSlugPageDataQuery,
-      params: { slug: `/${slug}` },
+      params: { slug },
       tags: [SANITY_TAGS.slugPage, slug],
       preview: isEnabled,
     }),

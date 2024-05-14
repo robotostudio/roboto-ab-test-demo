@@ -22,6 +22,7 @@ import {
 import { SchemaType, SingletonType } from './schemaTypes';
 import { getTitleCase } from './utils/helper';
 import { PreviewIFrame } from './components/preview';
+import { abTestStructureList } from './plugin';
 
 type Base<T = SchemaType> = {
   type: T;
@@ -126,10 +127,7 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (
-  S: StructureBuilder,
-  context: StructureResolverContext,
-) =>
+export const structure = (S: StructureBuilder, context: StructureResolverContext) =>
   S.list()
     .title('Content')
     .items([
@@ -145,6 +143,7 @@ export const structure = (
       createList({ S, type: 'form', icon: ClipboardType }),
       createList({ S, type: 'marketingModal', icon: ClipboardType }),
       S.divider(),
+      abTestStructureList(S),
       createNestedList({
         S,
         title: 'Settings',
