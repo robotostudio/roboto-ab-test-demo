@@ -14,31 +14,25 @@ import { PageParams } from '~/types';
 
 export const generateStaticParams = async () => {
   const slugs = await getAllSlugPagePaths();
-
   const pages = slugs.map((slug) => ({
     slug: slug?.slug,
   }));
-
   return pages;
 };
 
 export const generateMetadata = async ({
   params,
 }: PageParams<{ slug: string }>): Promise<Metadata> => {
-  const [data, err] = await getSlugPageData(params.slug);
+  const [data, err] = await getSlugPageData(`/${params.slug}`);
   if (!data || err) return {};
   return getMetaData(data);
 };
 
 export default async function Page({ params }: PageParams<{ slug: string }>) {
   const { slug } = params ?? {};
-  const [data, err] = await getSlugPageData(slug);
-
-  if (err || !data) {
-    return notFound();
-  }
+  const [data, err] = await getSlugPageData(`/${slug}`);
+  if (err || !data) return notFound();
   const { isEnabled } = draftMode();
-
   if (isEnabled) {
     return (
       <LiveQuery

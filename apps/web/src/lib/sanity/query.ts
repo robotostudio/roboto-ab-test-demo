@@ -227,3 +227,18 @@ export const getOGDataQuery = groq`
 
 }
 `;
+
+
+export const abTestQuery = groq`
+*[_type == "abTest" && enabled]{
+    _id,
+    "variants":variants[]->slug.current
+}
+`;
+
+export const abTestPageQuery = groq`
+*[_type == "abTest" && enabled && $slug in variants[]->slug.current][0]{
+  "slugs": variants[]->slug.current
+}
+`;
+

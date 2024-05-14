@@ -4,6 +4,7 @@ export const ogImageDimensions = {
 };
 
 
+export const USER_VARIANT_COOKIE = 'user-variant';
 
 export const SANITY_TAGS = {
   mainPage: 'main-page',
@@ -13,6 +14,8 @@ export const SANITY_TAGS = {
   slugPage: 'slug-page',
   footer: 'footer',
   navbar: 'navbar',
+  abTest: 'ab-test',
+  abTestIndex: 'ab-test-index',
 } as const;
 
 type GetSanityTag = {
@@ -23,6 +26,10 @@ type GetSanityTag = {
 export const getSanityTags = ({ type, slug }: GetSanityTag) => {
   if (type === 'mainPage') {
     return [SANITY_TAGS.mainPage];
+  }
+
+  if (type === 'abTest') {
+    return [SANITY_TAGS.abTest, SANITY_TAGS.abTestIndex];
   }
 
   if (type === 'page') {
