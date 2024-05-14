@@ -1,12 +1,8 @@
 import { defineField, defineType } from 'sanity';
-import { CONST, GROUPS } from '../../utils/constant';
-import {
-  createSlug,
-  getFlag,
-  isUniqueAcrossAllDocuments,
-} from '../../utils/helper';
-import { languageField, pageBuilderField } from '../../utils/common';
 import { cardFields } from '../../utils/cardFields';
+import { pageBuilderField } from '../../utils/common';
+import { CONST, GROUPS } from '../../utils/constant';
+import { createSlug, isUniqueAcrossAllDocuments } from '../../utils/helper';
 import { ogFields } from '../../utils/ogFields';
 import { seoFields } from '../../utils/seoFields';
 
@@ -49,7 +45,6 @@ export const page = defineType({
       },
     }),
     pageBuilderField,
-    languageField,
     ...seoFields,
     ...ogFields,
     ...cardFields,
@@ -57,13 +52,12 @@ export const page = defineType({
   preview: {
     select: {
       title: 'title',
-      lang: 'language',
       slug: 'slug.current',
       isPrivate: 'seoNoIndex',
     },
-    prepare: ({ title, lang, slug, isPrivate }) => {
+    prepare: ({ title, slug, isPrivate }) => {
       return {
-        title: [getFlag(lang), title].join(' '),
+        title: [title].join(' '),
         subtitle: [isPrivate ? 'Private' : 'Public', ':', slug].join(' '),
       };
     },

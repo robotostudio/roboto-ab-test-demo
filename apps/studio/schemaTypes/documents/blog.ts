@@ -1,8 +1,8 @@
 import { defineField, defineType } from 'sanity';
-import { languageField, pageBuilderField } from '../../utils/common';
 import { cardFields } from '../../utils/cardFields';
+import { pageBuilderField } from '../../utils/common';
 import { CONST, GROUPS } from '../../utils/constant';
-import { createSlug, getFlag } from '../../utils/helper';
+import { createSlug } from '../../utils/helper';
 import { ogFields } from '../../utils/ogFields';
 import { seoFields } from '../../utils/seoFields';
 
@@ -59,7 +59,6 @@ export const blog = defineType({
       group: CONST.MAIN_CONTENT,
       type: 'richText',
     }),
-    languageField,
     pageBuilderField,
     ...seoFields,
     ...ogFields,
@@ -68,14 +67,13 @@ export const blog = defineType({
   preview: {
     select: {
       title: 'title',
-      lang: 'language',
       media: 'image',
       slug: 'slug.current',
       isPrivate: 'seoNoIndex',
     },
-    prepare: ({ title, lang, slug, isPrivate, media }) => {
+    prepare: ({ title, slug, isPrivate, media }) => {
       return {
-        title: [getFlag(lang), title].join(' '),
+        title: [title].join(' '),
         subtitle: [isPrivate ? 'Private' : 'Public', ':', slug].join(' '),
         media,
       };

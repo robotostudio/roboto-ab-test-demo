@@ -1,5 +1,5 @@
 import { draftMode } from 'next/headers';
-import { LOCALIZED_SANITY_TAGS, Locale, SANITY_TAGS } from '~/config';
+import { SANITY_TAGS } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
 import {
   getAllBlogIndexTranslationsQuery,
@@ -38,32 +38,27 @@ export const getAllBlogIndexTranslations = async () => {
   );
 };
 
-export const getBlogPageData = async (slug: string, locale: Locale) => {
+export const getBlogPageData = async (slug: string) => {
   const { isEnabled } = draftMode();
 
-  const localizedSlug = getLocalizedSlug(slug, locale, 'blog');
+  const localizedSlug = getLocalizedSlug(slug, 'blog');
   return await handleErrors(
     sanityServerFetch<GetBlogPageDataQueryResult>({
       query: getBlogPageDataQuery,
-      params: { slug: localizedSlug, locale },
+      params: { slug },
       preview: isEnabled,
-      tags: [
-        LOCALIZED_SANITY_TAGS.blogPage(locale),
-        SANITY_TAGS.blogPage,
-        localizedSlug,
-      ],
+      tags: [SANITY_TAGS.blogPage],
     }),
   );
 };
 
-export const getBlogIndexData = async (locale: Locale) => {
+export const getBlogIndexData = async () => {
   const { isEnabled } = draftMode();
   return await handleErrors(
     sanityServerFetch<GetBlogIndexDataQueryResult>({
       query: getBlogIndexDataQuery,
-      params: { locale },
       preview: isEnabled,
-      tags: [LOCALIZED_SANITY_TAGS.blogIndex(locale), SANITY_TAGS.blogIndex],
+      tags: [SANITY_TAGS.blogIndex],
     }),
   );
 };

@@ -10,7 +10,6 @@ import {
   ValidationContext,
 } from 'sanity';
 import slugify from 'slugify';
-import getUnicodeFlagIcon from 'country-flag-icons/unicode';
 
 export const getTitleCase = (name: string) => {
   const titleTemp = name.replace(/([A-Z])/g, ' $1');
@@ -63,14 +62,11 @@ export const getDocTypePrefix = (type: string) => {
   return type;
 };
 
-export const serializeSlug = (input: string, language = 'en-GB', type = '') => {
-  const locale = processLanguage(language);
+export const serializeSlug = (input: string, type = '') => {
   const prefix = getDocTypePrefix(type);
-  console.log('lo', { input, language, type, prefix, locale });
   const slug =
     '/' +
     [
-      locale,
       prefix,
       slugify(input, {
         lower: true,
@@ -83,20 +79,18 @@ export const serializeSlug = (input: string, language = 'en-GB', type = '') => {
   return slug;
 };
 
-export const getFlag = (lang: string) => {
-  if (lang === 'en-GB') return getUnicodeFlagIcon('GB');
-  if (lang === 'en-US') return getUnicodeFlagIcon('US');
-  return getUnicodeFlagIcon(lang);
-};
+// export const getFlag = (lang: string) => {
+//   if (lang === 'en-GB') return getUnicodeFlagIcon('GB');
+//   if (lang === 'en-US') return getUnicodeFlagIcon('US');
+//   return getUnicodeFlagIcon(lang);
+// };
 
 export const createSlug: SlugifierFn = (input, _, { parent }) => {
-  const { language = 'en-GB', _type } = parent as {
+  const { _type } = parent as {
     _type: string;
-    language: string;
   };
   return serializeSlug(
     [...indexPageTypes, 'mainPage'].includes(_type) ? '' : input,
-    language,
     _type,
   );
 };

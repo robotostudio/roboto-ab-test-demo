@@ -1,7 +1,5 @@
-import { defineField, defineType } from 'sanity';
 import { FaWpforms } from 'react-icons/fa';
-import { languageField } from '../../utils/common';
-import { getFlag } from '../../utils/helper';
+import { defineField, defineType } from 'sanity';
 
 export const form = defineType({
   name: 'form',
@@ -16,7 +14,6 @@ export const form = defineType({
       type: 'string',
       validation: (r) => [r.required()],
     }),
-    languageField,
     defineField({
       name: 'fields',
       type: 'array',
@@ -35,11 +32,10 @@ export const form = defineType({
     select: {
       title: 'title',
       label: 'label',
-      lang: 'language',
     },
-    prepare: ({ title, label, lang }) => {
+    prepare: ({ title, label }) => {
       return {
-        title: [getFlag(lang), title ?? label].join(' '),
+        title: [title ?? label].join(' '),
         subtitle: 'Form',
         media: FaWpforms,
       };

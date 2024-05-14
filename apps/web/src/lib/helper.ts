@@ -1,4 +1,3 @@
-import { Locale } from '~/config';
 // import { SanityImage } from '~/types';
 import * as React from 'react';
 
@@ -32,13 +31,8 @@ export const extractFormData = (data: FormData) => {
   return raw;
 };
 
-export const getLocalizedSlug = (
-  slug: string,
-  locale: Locale,
-  prefix?: string,
-) => {
-  if (locale === 'en-GB') return '/' + [prefix, slug].filter(Boolean).join('/');
-  return '/' + [locale, prefix, slug].filter(Boolean).join('/');
+export const getLocalizedSlug = (slug: string, prefix?: string) => {
+  return '/' + [prefix, slug].filter(Boolean).join('/');
 };
 
 // export const getImageDimensionProps = (image: NonNullable<SanityImage>) => {

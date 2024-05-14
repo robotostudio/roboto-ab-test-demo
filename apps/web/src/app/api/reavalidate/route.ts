@@ -2,14 +2,13 @@
 import { parseBody } from 'next-sanity/webhook';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { NextResponse, type NextRequest } from 'next/server';
-import { Locale, getSanityTags } from '~/config';
+import { getSanityTags } from '~/config';
 
 type WebhookPayload = {
   _type: string;
   slug?: {
     current?: string;
   };
-  language?: Locale;
 };
 
 export async function POST(req: NextRequest) {
@@ -34,7 +33,6 @@ export async function POST(req: NextRequest) {
     const slug = body?.slug?.current;
     const tags = getSanityTags({
       type: body._type,
-      locale: body?.language,
       slug,
     });
     tags.forEach((tag) => revalidateTag(tag));

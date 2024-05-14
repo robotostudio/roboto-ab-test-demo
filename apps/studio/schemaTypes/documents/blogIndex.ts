@@ -1,12 +1,7 @@
 import { defineField, defineType } from 'sanity';
-import { CONST, GROUPS } from '../../utils/constant';
 import { cardFields } from '../../utils/cardFields';
-import { languageField } from '../../utils/common';
-import {
-  createSlug,
-  getFlag,
-  isUniqueAcrossAllDocuments,
-} from '../../utils/helper';
+import { CONST, GROUPS } from '../../utils/constant';
+import { createSlug, isUniqueAcrossAllDocuments } from '../../utils/helper';
 import { ogFields } from '../../utils/ogFields';
 import { seoFields } from '../../utils/seoFields';
 
@@ -49,8 +44,6 @@ export const blogIndex = defineType({
         isUnique: isUniqueAcrossAllDocuments,
       },
     }),
-    // pageBuilderField,
-    languageField,
     ...seoFields,
     ...ogFields,
     ...cardFields,
@@ -58,13 +51,12 @@ export const blogIndex = defineType({
   preview: {
     select: {
       title: 'title',
-      lang: 'language',
       slug: 'slug.current',
       isPrivate: 'seoNoIndex',
     },
-    prepare: ({ title, lang, slug, isPrivate }) => {
+    prepare: ({ title, slug, isPrivate }) => {
       return {
-        title: [getFlag(lang), title].join(' '),
+        title: [title].join(' '),
         subtitle: [isPrivate ? 'Private' : 'Public', ':', slug].join(' '),
       };
     },

@@ -18,7 +18,6 @@ export const generateStaticParams = async () => {
 
   const pages = slugs.map((slug) => ({
     slug: slug?.slug,
-    locale: slug?.locale,
   }));
 
   return pages;
@@ -27,14 +26,15 @@ export const generateStaticParams = async () => {
 export const generateMetadata = async ({
   params,
 }: PageParams<{ slug: string }>): Promise<Metadata> => {
-  const [data, err] = await getSlugPageData(params.slug, params.locale);
+  const [data, err] = await getSlugPageData(params.slug);
   if (!data || err) return {};
   return getMetaData(data);
 };
 
 export default async function Page({ params }: PageParams<{ slug: string }>) {
-  const { locale, slug } = params ?? {};
-  const [data, err] = await getSlugPageData(slug, locale);
+  const { slug } = params ?? {};
+  const [data, err] = await getSlugPageData(slug);
+  console.log('🚀 ~ Page ~ err:', err);
 
   if (err || !data) {
     return notFound();
@@ -47,7 +47,7 @@ export default async function Page({ params }: PageParams<{ slug: string }>) {
         enabled
         initialData={data}
         query={getSlugPageDataQuery}
-        params={{ slug: getLocalizedSlug(slug, locale), locale }}
+        params={{ slug: getLocalizedSlug(slug) }}
         as={SlugPageClient}
       >
         <SlugPage data={data} />

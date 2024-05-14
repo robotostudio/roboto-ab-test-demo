@@ -8,17 +8,8 @@ import {
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 
-export const generateStaticParams = async () => {
-  const [slugs, err] = await getAllBlogIndexTranslations();
-  if (err || !Array.isArray(slugs)) return [];
-  const locales = slugs.filter(Boolean) as string[];
-  return locales.map((locale) => ({ locale }));
-};
-
-export const generateMetadata = async ({
-  params,
-}: PageParams): Promise<Metadata> => {
-  const [data, err] = await getBlogIndexData(params.locale);
+export const generateMetadata = async (): Promise<Metadata> => {
+  const [data, err] = await getBlogIndexData();
   if (!data || err) return {};
   const { seo } = data;
   if (!seo) return {};
@@ -26,7 +17,7 @@ export const generateMetadata = async ({
 };
 
 export default async function BlogPage({ params }: PageParams) {
-  const [data, err] = await getBlogIndexData(params.locale);
+  const [data, err] = await getBlogIndexData();
   if (!data || err) return notFound();
   return <BlogIndexPage data={data} />;
 }

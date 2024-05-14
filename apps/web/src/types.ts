@@ -1,4 +1,3 @@
-import { Locale } from './config';
 import { CarouselField, Form } from './sanity.types';
 
 export type PreviewProps<T> = {
@@ -9,7 +8,7 @@ export type PreviewProps<T> = {
 };
 
 export type PageParams<T = Record<string, string>> = {
-  params: T & { locale: Locale };
+  params: T;
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -60,5 +59,3 @@ export type ProcessPageBuilderAddForm<T> = T extends { form?: unknown }
 export type ProcessPageBuilderBlock<T> = ProcessPageBuilderAddButtons<
   ProcessPageBuilderAddForm<T>
 >;
-
-

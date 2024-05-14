@@ -1,13 +1,9 @@
 import { groq } from 'next-sanity';
-import { Locale } from '~/config';
 import { Blog, BlogIndex, PageBuilder } from '~/sanity.types';
 import { SanityImage } from '~/types';
 
-
-
-export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) => 
-  (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)`;
-
+// export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) =>
+//   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)`;
 
 export type GetSlugPageDataQueryResponse = {
   title: string;
@@ -18,13 +14,11 @@ export type GetSlugPageDataQueryResponse = {
 export const getAllSlugPagePathsQuery = groq`
 *[_type == "page" && defined(slug.current) && !seoNoIndex]{
   "slug":slug.current,
-  "locale":language
 }
 `;
 
 export type GetAllSlugPagePathsQueryResponse = {
   slug: string;
-  locale: Locale;
 }[];
 
 export type GetMainPageDataQueryResponse = {
@@ -47,10 +41,10 @@ const cardProjection = `
 
 export const getBlogIndexDataQuery = groq`
 {
-    "seo":*[_type == "blogIndex" && ${localeMatch}][0]{
+    "seo":*[_type == "blogIndex"][0]{
         ...,
     },
-    "blogs":*[_type == "blog" && ${localeMatch}]{
+    "blogs":*[_type == "blog"]{
       _id,
       ${cardProjection},
       "slug":slug.current
@@ -82,13 +76,11 @@ export type GetAllBlogIndexTranslationsQueryResponse = string[];
 export const getAllBlogsPathsQuery = groq`
 *[_type == "blog" && defined(slug.current) && !seoNoIndex]{
   "slug":slug.current,
-  "locale":language
 }
 `;
 
 export type GetAllBlogsPathsQuery = {
   slug: string;
-  locale: Locale;
 }[];
 
 const _url = `defined(url)=>{
@@ -190,14 +182,14 @@ export const getNavbarDataQuery = groq`
   `;
 
 export const getBlogPageDataQuery = groq`
-*[_type == "blog" && slug.current == $slug && ${localeMatch}][0]{
+*[_type == "blog" && slug.current == $slug][0]{
     ...,
     ${_richText}
   }
   `;
 
 export const getMainPageDataQuery = groq`
-*[_type == "mainPage" && ${localeMatch}][0]{
+*[_type == "mainPage"][0]{
   _id,
   _type,
   title,
@@ -211,10 +203,8 @@ export const getSlugPageDataQuery = groq`
     _id,
     _type,
     title,
-    content,
     "slug":slug.current,
     ${_pageBuilder}
-    
 }
 `;
 
@@ -226,19 +216,7 @@ export const getMarketingModalDataQuery = groq`
     ${_form}    
 }
 `;
-// export const ogQueryWrapper = (condition: string) => groq`
-// *[${condition}][0]{
-//   ${[
-//     coalesceConditions('title', ['ogTitle', 'title']),
-//     coalesceConditions('description', ['ogDescription', 'description']),
-//     coalesceConditions('image', [
-//       'seoImage',
-//       'image',
-//       groq`*[_type =="logo"][0].image`,
-//     ]),
-//   ].join(',')}
-// }
-// `;
+
 
 export const getOGDataQuery = groq`
 *[_id == $id][0]{
@@ -249,4 +227,3 @@ export const getOGDataQuery = groq`
 
 }
 `;
-

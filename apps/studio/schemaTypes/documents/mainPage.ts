@@ -1,16 +1,15 @@
+import { Home } from 'lucide-react';
 import { defineField, defineType } from 'sanity';
+import { cardFields } from '../../utils/cardFields';
+import { pageBuilderField } from '../../utils/common';
 import { CONST, GROUPS } from '../../utils/constant';
 import {
   createSlug,
-  getFlag,
   isUniqueAcrossAllDocuments,
   validateSlugIndexPages,
 } from '../../utils/helper';
-import { cardFields } from '../../utils/cardFields';
-import { languageField, pageBuilderField } from '../../utils/common';
 import { ogFields } from '../../utils/ogFields';
 import { seoFields } from '../../utils/seoFields';
-import { Home } from 'lucide-react';
 
 export const mainPage = defineType({
   name: 'mainPage',
@@ -54,7 +53,6 @@ export const mainPage = defineType({
       },
     }),
     pageBuilderField,
-    languageField,
     ...seoFields,
     ...ogFields,
     ...cardFields,
@@ -62,13 +60,12 @@ export const mainPage = defineType({
   preview: {
     select: {
       title: 'title',
-      lang: 'language',
       slug: 'slug.current',
     },
-    prepare(value) {
-      const { lang = 'en-GB', slug, title } = value ?? {};
+    prepare: (value) => {
+      const { slug, title } = value ?? {};
       return {
-        title: [getFlag(lang), title].join(' '),
+        title: [title].join(' '),
         media: Home,
       };
     },
