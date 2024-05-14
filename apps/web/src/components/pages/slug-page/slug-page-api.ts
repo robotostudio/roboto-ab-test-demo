@@ -1,7 +1,7 @@
 'use server';
 import { draftMode } from 'next/headers';
 import { SANITY_TAGS } from '~/config';
-import { getLocalizedSlug, handleErrors } from '~/lib/helper';
+import { handleErrors } from '~/lib/helper';
 import {
   getAllSlugPagePathsQuery,
   getSlugPageDataQuery,
@@ -18,7 +18,7 @@ export const getSlugPageData = async (slug: string) => {
   return await handleErrors(
     sanityServerFetch<GetSlugPageDataQueryResult>({
       query: getSlugPageDataQuery,
-      params: { slug },
+      params: { slug: `/${slug}` },
       tags: [SANITY_TAGS.slugPage, slug],
       preview: isEnabled,
     }),

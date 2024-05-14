@@ -8,17 +8,14 @@ import { MainPageComponentClient } from '~/components/pages/main-page/main-page-
 import { getMainPageDataQuery } from '~/lib/sanity/query';
 
 import { getMetaData } from '~/lib/seo';
-import { PageParams } from '~/types';
 
-export const generateMetadata = async ({
-  params,
-}: PageParams): Promise<Metadata> => {
+export const generateMetadata = async (): Promise<Metadata> => {
   const [data, err] = await getMainPageData();
   if (!data || err) return {};
   return getMetaData(data);
 };
 
-export default async function Page({ params }: PageParams) {
+export default async function Page() {
   const [data, err] = await getMainPageData();
   if (!data || err) return notFound();
 

@@ -1,6 +1,6 @@
 import { draftMode } from 'next/headers';
 import { SANITY_TAGS } from '~/config';
-import { getLocalizedSlug, handleErrors } from '~/lib/helper';
+import { handleErrors } from '~/lib/helper';
 import {
   getAllBlogIndexTranslationsQuery,
   getAllBlogsPathsQuery,
@@ -41,11 +41,10 @@ export const getAllBlogIndexTranslations = async () => {
 export const getBlogPageData = async (slug: string) => {
   const { isEnabled } = draftMode();
 
-  const localizedSlug = getLocalizedSlug(slug, 'blog');
   return await handleErrors(
     sanityServerFetch<GetBlogPageDataQueryResult>({
       query: getBlogPageDataQuery,
-      params: { slug },
+      params: { slug: `/blog/${slug}` },
       preview: isEnabled,
       tags: [SANITY_TAGS.blogPage],
     }),

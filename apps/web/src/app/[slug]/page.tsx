@@ -8,7 +8,6 @@ import {
 } from '~/components/pages/slug-page/slug-page-api';
 import { SlugPageClient } from '~/components/pages/slug-page/slug-page-client';
 import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
-import { getLocalizedSlug } from '~/lib/helper';
 import { getSlugPageDataQuery } from '~/lib/sanity/query';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
@@ -34,7 +33,6 @@ export const generateMetadata = async ({
 export default async function Page({ params }: PageParams<{ slug: string }>) {
   const { slug } = params ?? {};
   const [data, err] = await getSlugPageData(slug);
-  console.log('🚀 ~ Page ~ err:', err);
 
   if (err || !data) {
     return notFound();
@@ -47,7 +45,7 @@ export default async function Page({ params }: PageParams<{ slug: string }>) {
         enabled
         initialData={data}
         query={getSlugPageDataQuery}
-        params={{ slug: getLocalizedSlug(slug) }}
+        params={{ slug: `/${slug}` }}
         as={SlugPageClient}
       >
         <SlugPage data={data} />

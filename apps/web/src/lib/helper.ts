@@ -1,4 +1,3 @@
-// import { SanityImage } from '~/types';
 import * as React from 'react';
 
 export async function handleErrors<T>(
@@ -10,8 +9,6 @@ export async function handleErrors<T>(
   } catch (err) {
     if (err instanceof Error) {
       console.log('errr', err.name, err.message);
-      // } else if (isAxiosError(err)) {
-      //   console.log('eror', err.response);
     } else {
       console.log('eror', JSON.stringify(err));
     }
@@ -30,18 +27,6 @@ export const extractFormData = (data: FormData) => {
   });
   return raw;
 };
-
-export const getLocalizedSlug = (slug: string, prefix?: string) => {
-  return '/' + [prefix, slug].filter(Boolean).join('/');
-};
-
-// export const getImageDimensionProps = (image: NonNullable<SanityImage>) => {
-//   const { height, width } = getImageDimensions(image);
-//   return {
-//     height,
-//     width,
-//   };
-// };
 
 export function useMediaQuery(query: string) {
   const [value, setValue] = React.useState(false);
