@@ -26,21 +26,19 @@ export const generateStaticParams = async () => {
   if (!res || err) return [];
 
   const paths: {
-    params: {
-      slug: string;
-      variant: string;
-    };
+    slug: string;
+    variant: string;
   }[] = [];
 
   res.forEach((test) => {
     const _variants = test.variants?.filter(Boolean) as string[];
     _variants.forEach((variant, index) => {
-      paths.push({
-        params: {
-          slug: variant,
+      const [slugFragments] = variant.split('/').filter(Boolean);
+      if (slugFragments)
+        paths.push({
+          slug: slugFragments,
           variant: `${index}`,
-        },
-      });
+        });
     });
   });
   return paths;
