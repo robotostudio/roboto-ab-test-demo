@@ -23,7 +23,7 @@ export default defineConfig({
     assist(),
     unsplashImageAsset(),
     abTest({
-      schemaTypes: ['page'],
+      schemaType: 'page',
     }),
     media(),
     iconPicker(),
