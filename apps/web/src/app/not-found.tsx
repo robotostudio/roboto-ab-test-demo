@@ -1,3 +1,4 @@
+import { Footer } from '~/components/global/footer';
 import { Navbar } from '~/components/global/navbar';
 
 export default function NotFound() {
@@ -6,7 +7,10 @@ export default function NotFound() {
       <body>
         <main>
           <Navbar />
-          <div>Not Found</div>
+          <section className="grid min-h-screen place-items-center">
+            <h1 className="text-4xl font-bold">Not Found</h1>
+          </section>
+          <Footer />
         </main>
       </body>
     </html>

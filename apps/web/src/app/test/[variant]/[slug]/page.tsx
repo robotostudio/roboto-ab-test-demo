@@ -45,8 +45,10 @@ export const generateStaticParams = async () => {
 };
 
 const pageToFetch = async (slug: string, variant: string) => {
+  const { isEnabled } = draftMode();
   const filterVariant = Number(variant);
   const pageSlug = `/${slug}`;
+  if (isEnabled) return pageSlug;
   if (isNaN(filterVariant)) return pageSlug;
   const [res, abError] = await handleErrors(
     sanityServerFetch<AbTestPageQueryResult>({
@@ -65,10 +67,10 @@ const Page: FC<PageParams<{ slug: string; variant: string }>> = async ({
   params,
 }) => {
   const { slug, variant } = params ?? {};
+  const { isEnabled } = draftMode();
   const finalSlug = await pageToFetch(slug, variant);
   const [data, err] = await getSlugPageData(finalSlug);
   if (err || !data) return notFound();
-  const { isEnabled } = draftMode();
   if (isEnabled) {
     return (
       <LiveQuery

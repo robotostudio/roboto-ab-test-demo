@@ -1,6 +1,6 @@
 import { SanityDocument, Slug } from 'sanity';
 
-const previewSecret = '34845f83-b24b-4896-b18a-061fffbb8bf1';
+const previewSecret = '1370d142-342f-419f-aa63-1515bfdb68fa';
 
 const localUrl = `http://localhost:3000`;
 

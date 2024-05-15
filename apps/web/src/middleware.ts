@@ -30,6 +30,7 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   const pageSlug = getPageSlug(url.pathname);
+  console.log('🚀 ~ middleware ~ pageSlug:', pageSlug);
   if (!pageSlug) {
     const res = NextResponse.next();
     if (!req.cookies.has(USER_VARIANT_COOKIE)) {

@@ -29,7 +29,7 @@ export const extractFormData = (data: FormData) => {
 };
 
 export function useMediaQuery(query: string) {
-  const [value, setValue] = React.useState(false);
+  const [value, setValue] = React.useState(true);
 
   React.useEffect(() => {
     function onChange(event: MediaQueryListEvent) {
