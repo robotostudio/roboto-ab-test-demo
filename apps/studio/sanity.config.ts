@@ -7,7 +7,7 @@ import { iconPicker } from 'sanity-plugin-icon-picker';
 import { media } from 'sanity-plugin-media';
 import { schemaTypes } from './schemaTypes';
 import { defaultDocumentNode, structure } from './structure';
-import { abTestPlugin } from './plugin';
+import { abTest } from 'sanity-plugin-roboto-ab-test';
 
 export default defineConfig({
   name: 'default',
@@ -22,7 +22,7 @@ export default defineConfig({
     visionTool(),
     assist(),
     unsplashImageAsset(),
-    abTestPlugin({
+    abTest({
       schemaTypes: ['page'],
     }),
     media(),

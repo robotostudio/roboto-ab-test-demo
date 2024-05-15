@@ -22,7 +22,7 @@ import {
 import { SchemaType, SingletonType } from './schemaTypes';
 import { getTitleCase } from './utils/helper';
 import { PreviewIFrame } from './components/preview';
-import { abTestStructureList } from './plugin';
+import { abTestStructureList } from 'sanity-plugin-roboto-ab-test';
 
 type Base<T = SchemaType> = {
   type: T;
