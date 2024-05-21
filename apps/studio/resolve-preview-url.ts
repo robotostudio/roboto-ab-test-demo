@@ -4,7 +4,7 @@ const previewSecret = '1370d142-342f-419f-aa63-1515bfdb68fa';
 
 const localUrl = `http://localhost:3000`;
 
-const remoteUrl = 'https://roboto-demo-new-web.vercel.app';
+const remoteUrl = 'https://ab-test.roboto.studio';
 
 const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl;
 
